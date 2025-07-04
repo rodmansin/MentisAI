@@ -9,12 +9,14 @@ function App() {
         if (!input.trim()) return;
 
         const userMsg = { role: "user", content: input };
-        setMessages([...messages, userMsg]);
-        const response = await sendMessageToGPT(input);
+        const updatedMessages = [...messages, userMsg];
+        setMessages(updatedMessages);
+        
+        setInput("");
+
+        const response = await sendMessageToGPT(updatedMessages);
         const aiMsg = { role: "assistant", content: response };
         setMessages((prev) => [...prev, aiMsg]);
-
-        setInput("");
     };
 
     return (

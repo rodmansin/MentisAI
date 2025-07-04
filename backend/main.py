@@ -14,10 +14,10 @@ CORS(app, origins="http://localhost:5173", supports_credentials=True)
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.json
-    user_message = data.get("message", "")
+    messages = data.get("messages", [])
 
-    if not user_message:
-        return jsonify({ "error": "Empty message" }), 400
+    if not messages:
+        return jsonify({ "error": "Empty conversation" }), 400
 
     # Send user message to OpenAI
     response = client.chat.completions.create(
@@ -31,10 +31,7 @@ def chat():
                     "Ask gentle, open-ended questions and guide the user toward clarity."
                 )
             },
-            {
-                "role": "user",
-                "content": user_message
-            }
+            *messages
         ]
     )
     

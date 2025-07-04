@@ -1,14 +1,14 @@
 const API_URL = "http://localhost:5001/chat";
 
 // Send message to backend and get response from GPT
-export default async function sendMessageToGPT(message) {
+export default async function sendMessageToGPT(messageHistory) {
     try {
         const res = await fetch(API_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ message })
+            body: JSON.stringify({ messages: messageHistory })
         });
 
         const data = await res.json();
