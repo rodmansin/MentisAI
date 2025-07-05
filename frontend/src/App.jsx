@@ -4,7 +4,15 @@ import logo from "./images/mentisAILogo.png";
 
 function App() {
     const [input, setInput] = useState("");
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([
+        { role: "assistant", content: "Hello, I'm MentisAI. How are you feeling today?" }
+    ]);
+
+    // Auto scrolling
+    const bottomRef = useRef(null);
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     const sendMessage = async () => {
         if (!input.trim()) return;
@@ -64,6 +72,8 @@ function App() {
                     </div>
                 </div>
                 ))}
+                {/* Auto scrolls here */}
+                <div ref={bottomRef}></div>
             </div>
 
             {/* Input text box and send button */}
